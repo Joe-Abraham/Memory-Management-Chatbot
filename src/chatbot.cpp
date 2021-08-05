@@ -12,7 +12,7 @@
 ChatBot::ChatBot()
 {
     // invalidate data handles
-    _image = nullptr;
+    _image = NULL;
     _chatLogic = nullptr;
     _rootNode = nullptr;
 }
@@ -44,6 +44,73 @@ ChatBot::~ChatBot()
 
 //// STUDENT CODE
 ////
+
+ChatBot::ChatBot(ChatBot &chatBot)
+{
+    std::cout << "ChatBot copy constructor\n";
+
+    this->_chatLogic = chatBot._chatLogic;
+    this->_currentNode = chatBot._currentNode;
+    this->_rootNode = chatBot._rootNode;
+    this->_image = new wxBitmap(*chatBot._image);
+    this->_chatLogic->SetChatbotHandle(this);
+}
+
+ChatBot &ChatBot::operator=(ChatBot &chatBot)
+{
+    std::cout << "ChatBot copy Assignment Operator\n";
+    if (this == &chatBot)
+        return *this;
+
+    this->_chatLogic = chatBot._chatLogic;
+    this->_currentNode = chatBot._currentNode;
+    this->_rootNode = chatBot._rootNode;
+    this->_image = new wxBitmap(*chatBot._image);
+    this->_chatLogic->SetChatbotHandle(this);
+
+    return *this;
+}
+
+ChatBot::ChatBot(ChatBot &&chatBot)
+{
+    std::cout << "ChatBot Move constructor\n";
+
+    this->_image = chatBot._image;
+    this->_chatLogic = chatBot._chatLogic;
+    this->_rootNode = chatBot._rootNode;
+    this->_currentNode = chatBot._currentNode;
+    this->_chatLogic->SetChatbotHandle(this);
+
+    chatBot._image = NULL;
+    chatBot._rootNode = nullptr;
+    chatBot._chatLogic = nullptr;
+    chatBot._currentNode = nullptr;
+}
+
+ChatBot &ChatBot::operator=(ChatBot &&chatBot)
+{
+    std::cout << "ChatBot Move Assignment Operator\n";
+    if (this == &chatBot)
+        return *this;
+
+    if (this->_image != NULL)
+    {
+        delete this->_image;
+    }
+
+    this->_image = chatBot._image;
+    this->_chatLogic = chatBot._chatLogic;
+    this->_rootNode = chatBot._rootNode;
+    this->_currentNode = chatBot._currentNode;
+    this->_chatLogic->SetChatbotHandle(this);
+
+    chatBot._image = NULL;
+    chatBot._rootNode = nullptr;
+    chatBot._chatLogic = nullptr;
+    chatBot._currentNode = nullptr;
+
+    return *this;
+}
 
 ////
 //// EOF STUDENT CODE

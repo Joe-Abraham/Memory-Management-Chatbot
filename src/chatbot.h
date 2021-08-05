@@ -1,6 +1,7 @@
 #ifndef CHATBOT_H_
 #define CHATBOT_H_
 
+#include <iostream>
 #include <wx/bitmap.h>
 #include <string>
 
@@ -29,6 +30,11 @@ public:
 
     //// STUDENT CODE
     ////
+
+    ChatBot(ChatBot &chatBot);
+    ChatBot &operator=(ChatBot &chatBot);
+    ChatBot(ChatBot &&chatBot);
+    ChatBot &operator=(ChatBot &&chatBot);
 
     ////
     //// EOF STUDENT CODE
